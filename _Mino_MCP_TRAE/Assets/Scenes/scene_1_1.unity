@@ -17714,7 +17714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allScenes:
-  - sceneId: intro_scene
+  - sceneId: scene_1_1
     dialogueLines:
     - characterName: Alice
       dialogueText: "\u6B22\u8FCE\u6765\u5230\u6211\u4EEC\u7684\u4E16\u754C\uFF01\u6211\u662F\u7231\u4E3D\u4E1D\uFF0C\u5F88\u9AD8\u5174\u8BA4\u8BC6\u4F60\uFF01"
