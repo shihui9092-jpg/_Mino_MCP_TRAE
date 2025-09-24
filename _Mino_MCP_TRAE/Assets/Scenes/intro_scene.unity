@@ -1390,7 +1390,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 53aca184751fe8c4c9fa1d09e75ed695, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2529,7 +2529,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: e0edb537293af4540a4d6b3b6bb68c8f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6283,7 +6283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Are you Ok?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8279,26 +8279,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19d7ede440518042a6868b836713fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmSource: {fileID: 102746679}
-  voiceSource: {fileID: 1509962886}
-  sfxSource: {fileID: 398491531}
-  ambientSource: {fileID: 1821123994}
+  bgmSource: {fileID: 0}
+  voiceSource: {fileID: 0}
+  sfxSource: {fileID: 0}
+  ambientSource: {fileID: 0}
   bgmTracks:
-  - {fileID: 8300000, guid: 53aca184751fe8c4c9fa1d09e75ed695, type: 3}
-  - {fileID: 8300000, guid: 8182a077bf3852a46b2e8526d658c4aa, type: 3}
-  - {fileID: 8300000, guid: 75bb5d5fb0d4eb243a6e63902de8c055, type: 3}
+  - {fileID: 0}
   ambientSounds:
-  - {fileID: 8300000, guid: 145bddd033ada73458a6404b9f37ceb3, type: 3}
-  - {fileID: 8300000, guid: d17be30ad0dc0b046b3cd7f09b469fa4, type: 3}
-  - {fileID: 8300000, guid: fe7cdb9b2082a824cb8ea58abe2aaf7b, type: 3}
+  - {fileID: 0}
   uiSfx:
-  - {fileID: 8300000, guid: 843d83aa2bd745d4e98af76588256f4d, type: 3}
-  - {fileID: 8300000, guid: f90bd5343009c0b4c82db40c915b8371, type: 3}
-  - {fileID: 8300000, guid: 383aae1983c7c504eaeb1587797d74a3, type: 3}
-  - {fileID: 8300000, guid: 2e874a3b39871734ea9c63ee6fb807fd, type: 3}
-  - {fileID: 8300000, guid: e532f733de72372478f971503a23a278, type: 3}
-  - {fileID: 8300000, guid: 9fff91fdaf4e3914b8e518fa89b638aa, type: 3}
-  - {fileID: 8300000, guid: a86d9070142082c4585c0fdd7ea700c4, type: 3}
+  - {fileID: 0}
 --- !u!1 &716955578
 GameObject:
   m_ObjectHideFlags: 0
@@ -12488,40 +12478,12 @@ MonoBehaviour:
   characters:
   - characterName: Ailice
     fullName: "\u7231\u4E3D\u4E1D"
-    age: 17
-    personality: "\u6D3B\u6CFC\u5F00\u6717\u7684\u5C11\u5973"
-    background: "\u6765\u81EA\u9B54\u6CD5\u5B66\u9662\u7684\u4F18\u7B49\u751F"
+    age: 25
+    personality: "\u66B4\u8E81"
+    background: "\u795E\u8BDD\u89D2\u8272"
     expressions:
-    - {fileID: 21300000, guid: baa180cc1d35af54a9c9e98478c8e442, type: 3}
-    - {fileID: 21300000, guid: 6b14ddff90542f0438cdeef5f7cb540d, type: 3}
     - {fileID: 21300000, guid: e0edb537293af4540a4d6b3b6bb68c8f, type: 3}
-    - {fileID: 21300000, guid: 3792892cd6e7d7c45865f795183b0ed0, type: 3}
-    - {fileID: 21300000, guid: 5bbf4c082c2cde342a4e648d9b36c4e4, type: 3}
-    nameColor: {r: 1, g: 0.41960785, b: 0.41960785, a: 1}
-  - characterName: Bob
-    fullName: "\u9C8D\u52C3\xB7\u53F2\u5BC6\u65AF"
-    age: 17
-    personality: "\u51B7\u9759\u6C89\u7740\uFF0C\u64C5\u957F\u5251\u672F"
-    background: "\u7687\u5BB6\u9A91\u58EB\u56E2\u7684\u6210\u5458"
-    expressions:
-    - {fileID: 21300000, guid: baa180cc1d35af54a9c9e98478c8e442, type: 3}
-    - {fileID: 21300000, guid: 6b14ddff90542f0438cdeef5f7cb540d, type: 3}
-    - {fileID: 21300000, guid: e0edb537293af4540a4d6b3b6bb68c8f, type: 3}
-    - {fileID: 21300000, guid: 3792892cd6e7d7c45865f795183b0ed0, type: 3}
-    - {fileID: 21300000, guid: 5bbf4c082c2cde342a4e648d9b36c4e4, type: 3}
-    nameColor: {r: 0.4, g: 0.6, b: 1, a: 1}
-  - characterName: Carol
-    fullName: "\u5361\u7F57\u5C14\xB7\u6234\u7EF4\u65AF"
-    age: 19
-    personality: "\u795E\u79D8\u83AB\u6D4B\uFF0C\u7CBE\u901A\u9B54\u6CD5"
-    background: "\u6765\u81EA\u53E4\u8001\u9B54\u6CD5\u5BB6\u65CF"
-    expressions:
-    - {fileID: 21300000, guid: d8959a99bd07c6f4fa47eae637c93573, type: 3}
-    - {fileID: 21300000, guid: 4d9fb53d4520263438fcb6337d78cbf5, type: 3}
-    - {fileID: 21300000, guid: 3d4f9f9e5d7d37049b1bc71dcf3b7d8a, type: 3}
-    - {fileID: 21300000, guid: d5cd67e20f294104fb38bd29602b6ac6, type: 3}
-    - {fileID: 21300000, guid: 52e0b3046b3ce834c954417bc043035f, type: 3}
-    nameColor: {r: 0.8, g: 0.4, b: 1, a: 1}
+    nameColor: {r: 1, g: 0.10849059, b: 0.10849059, a: 1}
 --- !u!1 &1101624652
 GameObject:
   m_ObjectHideFlags: 0
@@ -16381,7 +16343,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 'Ailice:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -18268,34 +18230,15 @@ MonoBehaviour:
   allScenes:
   - sceneId: MainScene
     dialogueLines:
-    - characterName: "\u65C1\u767D"
-      dialogueText: "\u5728\u4E00\u4E2A\u9065\u8FDC\u7684\u9B54\u6CD5\u4E16\u754C\u91CC\uFF0C\u4E09\u4E2A\u547D\u8FD0\u4EA4\u7EC7\u7684\u5E74\u8F7B\u4EBA\u5373\u5C06\u5F00\u59CB\u4ED6\u4EEC\u7684\u5192\u9669..."
-      characterSprite: {fileID: 0}
-      voiceClip: {fileID: 0}
-      expression: 0
-    - characterName: Alice
-      dialogueText: "\u6B22\u8FCE\u6765\u5230\u6211\u4EEC\u7684\u4E16\u754C\uFF01\u6211\u662F\u7231\u4E3D\u4E1D\uFF0C\u5F88\u9AD8\u5174\u8BA4\u8BC6\u4F60\uFF01"
-      characterSprite: {fileID: 0}
-      voiceClip: {fileID: 0}
-      expression: 0
-    - characterName: Bob
-      dialogueText: "\u6211\u662F\u9C8D\u52C3\uFF0C\u51C6\u5907\u597D\u5F00\u59CB\u8FD9\u6BB5\u65C5\u7A0B\u4E86\u5417\uFF1F"
-      characterSprite: {fileID: 0}
-      voiceClip: {fileID: 0}
-      expression: 0
-    - characterName: Carol
-      dialogueText: "\u547D\u8FD0\u7684\u9009\u62E9\u5C31\u5728\u4F60\u7684\u624B\u4E2D..."
+    - characterName: 
+      dialogueText: Are you Ok?
       characterSprite: {fileID: 0}
       voiceClip: {fileID: 0}
       expression: 0
     choices:
-    - choiceText: "\u8DDF\u968F\u7231\u4E3D\u4E1D\u63A2\u7D22\u9B54\u6CD5\u5B66\u9662"
-      nextScene: alice_route_1
-    - choiceText: "\u4E0E\u9C8D\u52C3\u4E00\u8D77\u52A0\u5165\u9A91\u58EB\u56E2"
-      nextScene: bob_route_1
-    - choiceText: "\u63A2\u5BFB\u5361\u7F57\u5C14\u7684\u79D8\u5BC6"
-      nextScene: carol_route_1
-    backgroundMusic: {fileID: 8300000, guid: 53aca184751fe8c4c9fa1d09e75ed695, type: 3}
+    - choiceText: 
+      nextScene: 
+    backgroundMusic: {fileID: 0}
     backgroundImage: {fileID: 0}
 --- !u!1 &1760988507
 GameObject:
