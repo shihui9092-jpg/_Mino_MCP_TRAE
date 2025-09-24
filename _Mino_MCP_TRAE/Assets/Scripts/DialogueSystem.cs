@@ -83,6 +83,8 @@ public class DialogueSystem : MonoBehaviour
     public static DialogueSystem Instance { get; private set; }
     
     [Header("UI组件")]
+    [Tooltip("对话面板游戏对象")]
+    public GameObject dialoguePanel;
     [Tooltip("角色名称文本组件")]
     public TextMeshProUGUI characterNameText;
     [Tooltip("对话文本组件")]
@@ -136,43 +138,43 @@ public class DialogueSystem : MonoBehaviour
     /// <param name="sceneId">场景ID</param>
     public void StartScene(string sceneId)
     {
-        currentScene = scenes.Find(s => s.sceneId == sceneId);
-        if (currentScene != null)
+        SceneData scene = SceneDataManager.Instance.GetScene(sceneId);
+        
+        // 添加空值检查
+        if (scene == null)
         {
-            currentLineIndex = 0;
-            SetupScene(currentScene);
-            DisplayNextLine();
-        }
-    }
-    
-    /// <summary>
-    /// 设置场景初始状态
-    /// </summary>
-    /// <param name="scene">场景数据</param>
-    private void SetupScene(SceneData scene)
-    {
-        // 设置背景
-        if (scene.backgroundImage != null)
-        {
-            backgroundImage.sprite = scene.backgroundImage;
+            Debug.LogError($"场景 {sceneId} 不存在！");
+            return;
         }
         
-        // 播放背景音乐
-        if (scene.backgroundMusic != null)
+        if (scene.dialogueLines == null)
         {
-            bgmSource.clip = scene.backgroundMusic;
-            bgmSource.Play();
+            scene.dialogueLines = new List<DialogueLine>();
         }
         
-        // 隐藏选择面板
-        choicePanel.SetActive(false);
+        currentScene = scene;
+        currentLineIndex = 0;
+        dialoguePanel.SetActive(true);
+        DisplayNextLine();
     }
-    
-    /// <summary>
-    /// 显示下一行对话或选择项
-    /// </summary>
+
     public void DisplayNextLine()
     {
+        // 检查currentScene是否为空
+        if (currentScene == null)
+        {
+            Debug.LogError("currentScene is null!");
+            return;
+        }
+        
+        // 检查dialogueLines是否为空
+        if (currentScene.dialogueLines == null)
+        {
+            Debug.LogError("currentScene.dialogueLines is null!");
+            currentScene.dialogueLines = new List<DialogueLine>();
+            return;
+        }
+        
         if (isTyping)
         {
             CompleteTyping();
@@ -190,13 +192,22 @@ public class DialogueSystem : MonoBehaviour
             ShowChoices();
         }
     }
-    
-    /// <summary>
-    /// 显示单行对话
-    /// </summary>
-    /// <param name="line">对话行数据</param>
+
     private void DisplayDialogueLine(DialogueLine line)
     {
+        // 检查UI组件是否绑定
+        if (characterNameText == null)
+        {
+            Debug.LogError("characterNameText is not assigned in Inspector!");
+            return;
+        }
+        
+        if (dialogueText == null)
+        {
+            Debug.LogError("dialogueText is not assigned in Inspector!");
+            return;
+        }
+        
         // 设置角色名称和头像
         characterNameText.text = line.characterName;
         if (line.characterSprite != null)

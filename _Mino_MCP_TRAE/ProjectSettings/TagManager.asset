@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BGM
+  - Voice
+  - SFX
+  - Ambient
   layers:
   - Default
   - TransparentFX
