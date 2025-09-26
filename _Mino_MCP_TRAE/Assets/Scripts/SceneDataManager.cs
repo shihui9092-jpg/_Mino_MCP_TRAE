@@ -86,7 +86,7 @@ public class SceneDataManager : MonoBehaviour
                 new Choice
                 {
                     choiceText = "向Alice问好",
-                    nextScene = "scene_1_2",
+                    nextScene = "alice_route_1",
                     effects = new Dictionary<string, int>
                     {
                         { "affection_Alice", 5 }
@@ -95,54 +95,270 @@ public class SceneDataManager : MonoBehaviour
                 new Choice
                 {
                     choiceText = "向Bob问好",
-                    nextScene = "scene_1_3",
+                    nextScene = "bob_route_1",
                     effects = new Dictionary<string, int>
                     {
                         { "affection_Bob", 5 }
+                    }
+                },
+                new Choice
+                {
+                    choiceText = "探索Carol的秘密",
+                    nextScene = "carol_route_1",
+                    effects = new Dictionary<string, int>
+                    {
+                        { "affection_Carol", 5 }
                     }
                 }
             }
         };
         
-        // 创建示例场景2
-        SceneData scene2 = new SceneData
+        // 创建Alice路线场景1
+        SceneData aliceScene1 = new SceneData
         {
-            sceneId = "scene_1_2",
+            sceneId = "alice_route_1",
             dialogueLines = new List<DialogueLine>
             {
                 new DialogueLine
                 {
                     characterName = "Alice",
-                    dialogueText = "谢谢你选择了我！让我们开始冒险吧！",
+                    dialogueText = "谢谢你选择了我！让我们开始魔法学院的冒险吧！",
+                    expression = Expression.Happy
+                },
+                new DialogueLine
+                {
+                    characterName = "Alice",
+                    dialogueText = "在魔法学院，你将学习各种强大的法术。准备好了吗？",
+                    expression = Expression.Excited
+                }
+            },
+            choices = new List<Choice>
+            {
+                new Choice
+                {
+                    choiceText = "学习火焰魔法",
+                    nextScene = "alice_route_2_fire",
+                    effects = new Dictionary<string, int>
+                    {
+                        { "affection_Alice", 10 },
+                        { "flag_fire_magic", 1 }
+                    }
+                },
+                new Choice
+                {
+                    choiceText = "学习冰霜魔法",
+                    nextScene = "alice_route_2_ice",
+                    effects = new Dictionary<string, int>
+                    {
+                        { "affection_Alice", 10 },
+                        { "flag_ice_magic", 1 }
+                    }
+                }
+            }
+        };
+        
+        // 创建Bob路线场景1
+        SceneData bobScene1 = new SceneData
+        {
+            sceneId = "bob_route_1",
+            dialogueLines = new List<DialogueLine>
+            {
+                new DialogueLine
+                {
+                    characterName = "Bob",
+                    dialogueText = "很高兴你选择了我！准备好开始骑士团的旅程了吗？",
+                    expression = Expression.Happy
+                },
+                new DialogueLine
+                {
+                    characterName = "Bob",
+                    dialogueText = "作为骑士，你需要选择你的专精方向。",
+                    expression = Expression.Normal
+                }
+            },
+            choices = new List<Choice>
+            {
+                new Choice
+                {
+                    choiceText = "成为剑术大师",
+                    nextScene = "bob_route_2_sword",
+                    effects = new Dictionary<string, int>
+                    {
+                        { "affection_Bob", 10 },
+                        { "flag_sword_master", 1 }
+                    }
+                },
+                new Choice
+                {
+                    choiceText = "成为防御专家",
+                    nextScene = "bob_route_2_shield",
+                    effects = new Dictionary<string, int>
+                    {
+                        { "affection_Bob", 10 },
+                        { "flag_shield_expert", 1 }
+                    }
+                }
+            }
+        };
+        
+        // 创建Carol路线场景1
+        SceneData carolScene1 = new SceneData
+        {
+            sceneId = "carol_route_1",
+            dialogueLines = new List<DialogueLine>
+            {
+                new DialogueLine
+                {
+                    characterName = "Carol",
+                    dialogueText = "命运的选择就在你的手中...让我们探索未知的秘密吧！",
+                    expression = Expression.Mysterious
+                },
+                new DialogueLine
+                {
+                    characterName = "Carol",
+                    dialogueText = "在命运的十字路口，你需要做出重要的决定。",
+                    expression = Expression.Serious
+                }
+            },
+            choices = new List<Choice>
+            {
+                new Choice
+                {
+                    choiceText = "探索古代遗迹",
+                    nextScene = "carol_route_2_ruins",
+                    effects = new Dictionary<string, int>
+                    {
+                        { "affection_Carol", 10 },
+                        { "flag_ancient_ruins", 1 }
+                    }
+                },
+                new Choice
+                {
+                    choiceText = "研究神秘符文",
+                    nextScene = "carol_route_2_runes",
+                    effects = new Dictionary<string, int>
+                    {
+                        { "affection_Carol", 10 },
+                        { "flag_mystic_runes", 1 }
+                    }
+                }
+            }
+        };
+        
+        // 创建Alice路线的二级场景
+        SceneData aliceScene2Fire = new SceneData
+        {
+            sceneId = "alice_route_2_fire",
+            dialogueLines = new List<DialogueLine>
+            {
+                new DialogueLine
+                {
+                    characterName = "Alice",
+                    dialogueText = "火焰魔法是最具破坏力的元素魔法！让我们开始学习吧！",
+                    expression = Expression.Excited
+                }
+            },
+            choices = new List<Choice>()
+        };
+        
+        SceneData aliceScene2Ice = new SceneData
+        {
+            sceneId = "alice_route_2_ice",
+            dialogueLines = new List<DialogueLine>
+            {
+                new DialogueLine
+                {
+                    characterName = "Alice",
+                    dialogueText = "冰霜魔法能够冻结一切！这是非常优雅的魔法！",
                     expression = Expression.Happy
                 }
             },
             choices = new List<Choice>()
         };
         
-        // 创建示例场景3
-        SceneData scene3 = new SceneData
+        // 创建Bob路线的二级场景
+        SceneData bobScene2Sword = new SceneData
         {
-            sceneId = "scene_1_3",
+            sceneId = "bob_route_2_sword",
             dialogueLines = new List<DialogueLine>
             {
                 new DialogueLine
                 {
                     characterName = "Bob",
-                    dialogueText = "很高兴你选择了我！准备好开始旅程了吗？",
-                    expression = Expression.Happy
+                    dialogueText = "剑术大师之路充满挑战，但你会成为最强的战士！",
+                    expression = Expression.Confident
+                }
+            },
+            choices = new List<Choice>()
+        };
+        
+        SceneData bobScene2Shield = new SceneData
+        {
+            sceneId = "bob_route_2_shield",
+            dialogueLines = new List<DialogueLine>
+            {
+                new DialogueLine
+                {
+                    characterName = "Bob",
+                    dialogueText = "防御专家能够保护所有人！这是最光荣的职责！",
+                    expression = Expression.Serious
+                }
+            },
+            choices = new List<Choice>()
+        };
+        
+        // 创建Carol路线的二级场景
+        SceneData carolScene2Ruins = new SceneData
+        {
+            sceneId = "carol_route_2_ruins",
+            dialogueLines = new List<DialogueLine>
+            {
+                new DialogueLine
+                {
+                    characterName = "Carol",
+                    dialogueText = "古代遗迹中隐藏着失落的文明秘密...让我们开始探索！",
+                    expression = Expression.Mysterious
+                }
+            },
+            choices = new List<Choice>()
+        };
+        
+        SceneData carolScene2Runes = new SceneData
+        {
+            sceneId = "carol_route_2_runes",
+            dialogueLines = new List<DialogueLine>
+            {
+                new DialogueLine
+                {
+                    characterName = "Carol",
+                    dialogueText = "神秘符文蕴含着强大的力量，需要小心研究...",
+                    expression = Expression.Serious
                 }
             },
             choices = new List<Choice>()
         };
         
         allScenes.Add(scene1);
-        allScenes.Add(scene2);
-        allScenes.Add(scene3);
+        allScenes.Add(aliceScene1);
+        allScenes.Add(bobScene1);
+        allScenes.Add(carolScene1);
+        allScenes.Add(aliceScene2Fire);
+        allScenes.Add(aliceScene2Ice);
+        allScenes.Add(bobScene2Sword);
+        allScenes.Add(bobScene2Shield);
+        allScenes.Add(carolScene2Ruins);
+        allScenes.Add(carolScene2Runes);
         
         sceneDictionary[scene1.sceneId] = scene1;
-        sceneDictionary[scene2.sceneId] = scene2;
-        sceneDictionary[scene3.sceneId] = scene3;
+        sceneDictionary[aliceScene1.sceneId] = aliceScene1;
+        sceneDictionary[bobScene1.sceneId] = bobScene1;
+        sceneDictionary[carolScene1.sceneId] = carolScene1;
+        sceneDictionary[aliceScene2Fire.sceneId] = aliceScene2Fire;
+        sceneDictionary[aliceScene2Ice.sceneId] = aliceScene2Ice;
+        sceneDictionary[bobScene2Sword.sceneId] = bobScene2Sword;
+        sceneDictionary[bobScene2Shield.sceneId] = bobScene2Shield;
+        sceneDictionary[carolScene2Ruins.sceneId] = carolScene2Ruins;
+        sceneDictionary[carolScene2Runes.sceneId] = carolScene2Runes;
     }
     
     /// <summary>
@@ -187,7 +403,7 @@ public class SceneDataManager : MonoBehaviour
     /// </summary>
     /// <param name="sceneId">要移除的场景ID</param>
     public void RemoveScene(string sceneId)
-        {
+    {
         if (sceneDictionary.ContainsKey(sceneId))
         {
             SceneData scene = sceneDictionary[sceneId];

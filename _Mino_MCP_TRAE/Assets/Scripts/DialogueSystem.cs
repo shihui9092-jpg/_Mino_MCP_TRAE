@@ -68,7 +68,15 @@ public enum Expression
     [Tooltip("生气表情")]
     Angry,
     [Tooltip("惊讶表情")]
-    Surprised
+    Surprised,
+    [Tooltip("神秘表情")]
+    Mysterious,
+    [Tooltip("严肃表情")]
+    Serious,
+    [Tooltip("兴奋表情")]
+    Excited,
+    [Tooltip("自信表情")]
+    Confident
 }
 
 /// <summary>
@@ -106,6 +114,10 @@ public class DialogueSystem : MonoBehaviour
     [Tooltip("音效音频源")]
     public AudioSource sfxSource;
     
+    [Header("对话设置")]
+    [Tooltip("打字效果速度（秒/字符）")]
+    public float textSpeed = 0.05f;
+    
     [Header("场景数据")]
     [Tooltip("所有场景数据列表")]
     public List<SceneData> scenes;
@@ -138,23 +150,60 @@ public class DialogueSystem : MonoBehaviour
     /// <param name="sceneId">场景ID</param>
     public void StartScene(string sceneId)
     {
+        // 检查SceneDataManager是否已初始化
+        if (SceneDataManager.Instance == null)
+        {
+            Debug.LogError("SceneDataManager实例为空！请确保SceneDataManager已正确初始化。");
+            return;
+        }
+        
         SceneData scene = SceneDataManager.Instance.GetScene(sceneId);
         
         // 添加空值检查
         if (scene == null)
         {
-            Debug.LogError($"场景 {sceneId} 不存在！");
+            Debug.LogError($"场景 {sceneId} 不存在！请检查场景数据配置。");
             return;
         }
         
         if (scene.dialogueLines == null)
         {
+            Debug.LogWarning($"场景 {sceneId} 的dialogueLines为空，将创建空列表。");
             scene.dialogueLines = new List<DialogueLine>();
         }
         
         currentScene = scene;
         currentLineIndex = 0;
+        
+        // 重置UI状态
+        if (choicePanel != null)
+        {
+            choicePanel.SetActive(false);
+        }
+        
+        // 应用场景数据 - 背景音乐和背景图片
+        ApplySceneData(scene);
+        
+        // 重置打字状态，确保新场景开始时没有正在进行的打字效果
+        isTyping = false;
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+        
+        // 检查对话面板是否已绑定
+        if (dialoguePanel == null)
+        {
+            Debug.LogError("对话面板未绑定！请在Inspector中设置dialoguePanel。");
+            return;
+        }
+        
         dialoguePanel.SetActive(true);
+        
+        // 记录场景开始信息
+        Debug.Log($"开始场景对话: {sceneId}");
+        
         DisplayNextLine();
     }
 
@@ -208,9 +257,41 @@ public class DialogueSystem : MonoBehaviour
             return;
         }
         
-        // 设置角色名称和头像
-        characterNameText.text = line.characterName;
-        if (line.characterSprite != null)
+        // 设置角色名称 - 优先使用CharacterManager中的角色数据
+        if (CharacterManager.Instance != null)
+        {
+            Character character = CharacterManager.Instance.GetCharacter(line.characterName);
+            if (character != null)
+            {
+                // 使用CharacterManager中的角色完整名称和颜色
+                characterNameText.text = character.fullName;
+                characterNameText.color = character.nameColor;
+            }
+            else
+            {
+                characterNameText.text = line.characterName;
+                characterNameText.color = Color.white;
+            }
+        }
+        else
+        {
+            characterNameText.text = line.characterName;
+            characterNameText.color = Color.white;
+        }
+        
+        // 设置角色头像 - 优先使用CharacterManager中的表情系统
+        Sprite characterSprite = null;
+        if (CharacterManager.Instance != null && !string.IsNullOrEmpty(line.characterName))
+        {
+            characterSprite = CharacterManager.Instance.GetExpressionSprite(line.characterName, line.expression);
+        }
+        
+        if (characterSprite != null)
+        {
+            characterImage.sprite = characterSprite;
+            characterImage.gameObject.SetActive(true);
+        }
+        else if (line.characterSprite != null)
         {
             characterImage.sprite = line.characterSprite;
             characterImage.gameObject.SetActive(true);
@@ -260,6 +341,14 @@ public class DialogueSystem : MonoBehaviour
             StopCoroutine(typingCoroutine);
         }
         
+        // 检查索引边界，防止越界
+        if (currentScene == null || currentScene.dialogueLines == null || currentLineIndex <= 0 || currentLineIndex > currentScene.dialogueLines.Count)
+        {
+            Debug.LogWarning("无法完成打字效果：索引越界或场景数据异常");
+            isTyping = false;
+            return;
+        }
+        
         DialogueLine line = currentScene.dialogueLines[currentLineIndex - 1];
         dialogueText.text = line.dialogueText;
         isTyping = false;
@@ -304,6 +393,9 @@ public class DialogueSystem : MonoBehaviour
     /// <param name="choice">被选中的选择项</param>
     private void OnChoiceSelected(Choice choice)
     {
+        // 播放选择音效
+        PlaySFX(choiceSelectSound);
+        
         // 应用选择效果
         if (choice.effects != null)
         {
@@ -322,8 +414,36 @@ public class DialogueSystem : MonoBehaviour
             }
         }
         
-        // 进入下一场景
-        StartScene(choice.nextScene);
+        // 关闭选择面板
+        if (choicePanel != null)
+        {
+            choicePanel.SetActive(false);
+        }
+        
+        // 记录选择信息
+        Debug.Log($"选择了选项: {choice.choiceText}, 跳转到场景: {choice.nextScene}");
+        
+        // 检查目标场景是否存在
+        SceneData nextSceneData = SceneDataManager.Instance.GetScene(choice.nextScene);
+        if (nextSceneData == null)
+        {
+            Debug.LogError($"目标场景不存在: {choice.nextScene}");
+            // 显示错误信息或返回主菜单
+            return;
+        }
+        
+        // 确保UI状态正确重置
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(false);
+        }
+        
+        // 清除当前对话状态
+        currentScene = null;
+        currentLineIndex = 0;
+        
+        // 短暂延迟后进入下一场景，确保UI状态完全重置
+        StartCoroutine(DelayedSceneTransition(choice.nextScene));
     }
     
     /// <summary>
@@ -331,10 +451,46 @@ public class DialogueSystem : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // 鼠标左键或空格键触发下一对话
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        // 只有在对话面板激活且当前场景不为空时才检测输入
+        if (dialoguePanel != null && dialoguePanel.activeInHierarchy && currentScene != null)
         {
-            DisplayNextLine();
+            // 鼠标左键或空格键触发下一对话
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+            {
+                DisplayNextLine();
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 应用场景数据 - 背景音乐和背景图片
+    /// </summary>
+    /// <param name="scene">场景数据</param>
+    private void ApplySceneData(SceneData scene)
+    {
+        // 应用背景音乐
+        if (scene.backgroundMusic != null && bgmSource != null)
+        {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayBGM(scene.backgroundMusic.name);
+            }
+            else
+            {
+                bgmSource.clip = scene.backgroundMusic;
+                bgmSource.Play();
+            }
+        }
+        
+        // 应用背景图片
+        if (scene.backgroundImage != null && backgroundImage != null)
+        {
+            backgroundImage.sprite = scene.backgroundImage;
+            backgroundImage.gameObject.SetActive(true);
+        }
+        else if (backgroundImage != null)
+        {
+            backgroundImage.gameObject.SetActive(false);
         }
     }
     
@@ -386,6 +542,19 @@ public class DialogueSystem : MonoBehaviour
     }
     
     /// <summary>
+    /// 延迟场景切换，确保UI状态完全重置
+    /// </summary>
+    /// <param name="sceneId">目标场景ID</param>
+    private IEnumerator DelayedSceneTransition(string sceneId)
+    {
+        // 等待一帧，确保UI状态完全重置
+        yield return null;
+        
+        // 进入下一场景
+        StartScene(sceneId);
+    }
+    
+    /// <summary>
     /// 播放音效
     /// </summary>
     /// <param name="clip">音效剪辑</param>
@@ -398,8 +567,6 @@ public class DialogueSystem : MonoBehaviour
     }
 
     [Header("对话设置")]
-    [Tooltip("文本显示速度（秒/字符）")]
-    public float textSpeed = 0.02f;
     [Tooltip("自动播放模式")]
     public bool autoPlayEnabled = false;
     [Tooltip("跳过已读文本模式")]

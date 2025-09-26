@@ -174,6 +174,10 @@ public class MainSceneController : MonoBehaviour
     
     private IEnumerator GameStartSequence()
     {
+        // 立即播放主菜单音乐（无延迟）
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayBGMImmediately("MainMenu", true);
+        
         // 播放开场动画
         if (VisualEffects.Instance != null)
             VisualEffects.Instance.FadeIn();
@@ -182,10 +186,6 @@ public class MainSceneController : MonoBehaviour
         // 显示主菜单
         if (UIManager.Instance != null)
             UIManager.Instance.ShowMainMenu();
-        
-        // 播放主菜单音乐
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlayBGM("MainMenu", true);
     }
     
     private IEnumerator StartNewGameSequence()

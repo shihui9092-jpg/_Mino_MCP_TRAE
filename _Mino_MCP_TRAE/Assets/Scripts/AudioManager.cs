@@ -90,6 +90,26 @@ public class AudioManager : MonoBehaviour
     }
     
     /// <summary>
+    /// 立即播放背景音乐（无淡入效果）
+    /// </summary>
+    /// <param name="bgmName">BGM名称</param>
+    /// <param name="loop">是否循环播放</param>
+    public void PlayBGMImmediately(string bgmName, bool loop = true)
+    {
+        if (bgmDictionary.ContainsKey(bgmName))
+        {
+            bgmSource.Stop();
+            bgmSource.clip = bgmDictionary[bgmName];
+            bgmSource.loop = loop;
+            bgmSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning($"未找到BGM: {bgmName}");
+        }
+    }
+    
+    /// <summary>
     /// BGM淡入淡出协程
     /// </summary>
     private IEnumerator FadeBGM(AudioClip newBGM, bool loop, float fadeDuration)
