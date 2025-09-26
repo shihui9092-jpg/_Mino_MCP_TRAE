@@ -44,16 +44,16 @@ public class SceneDataManager : MonoBehaviour
     /// </summary>
     private void InitializeScenes()
     {
-        // 初始化场景字典
-        foreach (SceneData scene in allScenes)
-        {
-            sceneDictionary[scene.sceneId] = scene;
-        }
-        
         // 如果没有场景数据，创建示例场景
         if (allScenes.Count == 0)
         {
             CreateDemoScenes();
+        }
+        
+        // 初始化场景字典（在创建演示场景后）
+        foreach (SceneData scene in allScenes)
+        {
+            sceneDictionary[scene.sceneId] = scene;
         }
     }
     
